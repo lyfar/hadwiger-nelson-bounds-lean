@@ -54,6 +54,25 @@ import HadwigerNelsonBounds
 #print axioms HadwigerNelsonBounds.unitDistanceHomOfEdgeRealization
 #print axioms HadwigerNelsonBounds.unitDistanceGraph_not_colorable_five_of_witness
 #print axioms HadwigerNelsonBounds.six_le_chromaticNumber_of_finite_witness
+#print axioms Finset.rado_selection_constraints
+#print axioms SimpleGraph.nonempty_hom_of_finite_induced
+#print axioms SimpleGraph.nonempty_hom_iff_finite_induced
+#print axioms SimpleGraph.not_nonempty_hom_iff_exists_finite_induced
+#print axioms SimpleGraph.ListColoring
+#print axioms SimpleGraph.ListColoring.induce
+#print axioms SimpleGraph.nonempty_listColoring_of_finite_induced
+#print axioms SimpleGraph.nonempty_listColoring_iff_finite_induced
+#print axioms SimpleGraph.not_nonempty_listColoring_iff_exists_finite_induced
+#print axioms SimpleGraph.colorable_of_finite_induced_colorable
+#print axioms SimpleGraph.finite_induced_colorable_of_colorable
+#print axioms SimpleGraph.colorable_iff_finite_induced_colorable
+#print axioms SimpleGraph.not_colorable_iff_exists_finite_induced_not_colorable
+#print axioms SimpleGraph.succ_le_chromaticNumber_iff_not_colorable
+#print axioms SimpleGraph.succ_le_chromaticNumber_iff_exists_finite_induced
+#print axioms SimpleGraph.exists_finite_induced_chromaticNumber_eq
+#print axioms HadwigerNelsonBounds.unitDistanceGraph_colorable_five_iff_every_finite
+#print axioms HadwigerNelsonBounds.six_le_chromaticNumber_iff_exists_finite_obstruction
+#print axioms HadwigerNelsonBounds.hadwiger_nelson_finite_witness_trichotomy
 LEAN
 
 axiom_log="$audit_dir/axioms.log"
@@ -65,8 +84,10 @@ import sys
 text = open(sys.argv[1], encoding="utf-8").read()
 allowed = {"Classical.choice", "propext", "Quot.sound"}
 payloads = re.findall(r"depends on axioms:\s*\[(.*?)\]", text, flags=re.DOTALL)
-if len(payloads) != 13:
-    raise SystemExit(f"expected thirteen axiom reports, found {len(payloads)}")
+empty_reports = re.findall(r"does not depend on any axioms", text)
+report_count = len(payloads) + len(empty_reports)
+if report_count != 32:
+    raise SystemExit(f"expected thirty-two axiom reports, found {report_count}")
 for payload in payloads:
     found = {name.strip() for name in payload.split(",") if name.strip()}
     unexpected = found - allowed

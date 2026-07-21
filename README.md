@@ -21,6 +21,27 @@ theorem HadwigerNelsonBounds.unitDistanceGraph_not_colorable_four :
     ¬ HadwigerNelsonBounds.unitDistanceGraph.Colorable 4
 ```
 
+The project also formalizes the de Bruijn--Erdős compactness theorem for
+arbitrary simple graphs and proves the exact finite-obstruction criterion:
+
+```lean
+theorem HadwigerNelsonBounds.six_le_chromaticNumber_iff_exists_finite_obstruction :
+    (6 : ℕ∞) ≤ HadwigerNelsonBounds.unitDistanceGraph.chromaticNumber ↔
+      ∃ s : Finset HadwigerNelsonBounds.R2,
+        ¬(HadwigerNelsonBounds.unitDistanceGraph.induce (↑s : Set _)).Colorable 5
+```
+
+Thus a finite non-5-colorable unit-distance graph is not merely sufficient for
+the lower bound 6: de Bruijn--Erdős compactness proves that such a finite
+obstruction must exist whenever the plane itself is not 5-colorable. The
+formalized finite-attainment theorem also shows that every positive finite
+chromatic number is attained by a finite induced subgraph.
+
+The compactness development proceeds through binary finite constraints and
+finite-target graph homomorphisms before deriving ordinary coloring. It also
+proves the corresponding compactness and finite-obstruction theorems for graph
+colorings from prescribed finite color lists.
+
 The proof has four checked layers:
 
 1. An explicit Isbell-style seven-coloring proves `χ(ℝ²) ≤ 7`.
@@ -32,7 +53,10 @@ The second-stage finite patch is not an extra mathematical assumption. Its edge 
 
 ## What is not proved
 
-The exact value of `χ(ℝ²)` is not known. This project proves only the bounds `5 ≤ χ(ℝ²) ≤ 7`; it does not decide whether the answer is 5, 6, or 7 and does not solve Erdős Problem 508.
+The exact value of `χ(ℝ²)` is not known. This project proves the bounds
+`5 ≤ χ(ℝ²) ≤ 7` and proves that the alternatives 6 and 7 would have finite
+exact witnesses. It does not construct either witness, decide whether the
+answer is 5, 6, or 7, or solve Erdős Problem 508.
 
 ## Source anchors
 
@@ -40,6 +64,7 @@ The exact value of `χ(ℝ²)` is not known. This project proves only the bounds
 - [Polymath 16: Hadwiger–Nelson problem](http://michaelnielsen.org/polymath1/index.php?title=Hadwiger-Nelson_problem) is the data archive cited by Parts for `Polymath16/Code and data/dropbox/JP/Pink`.
 - [Aubrey de Grey, *The chromatic number of the plane is at least 5*](https://arxiv.org/abs/1804.02385) is the original 2018 lower-bound breakthrough.
 - [Paul Erdős, *Some old and new problems in various branches of combinatorics*](https://combinatorica.hu/~p_erdos/1981-16.pdf) is the historical problem source.
+- [N. G. de Bruijn and P. Erdős, *A colour problem for infinite graphs and a problem in the theory of relations*](https://pure.tue.nl/ws/files/4237754/597497.pdf) is the primary compactness source.
 - [Erdős Problem 508](https://www.erdosproblems.com/508) records the open problem and the current bounds.
 
 ## Main modules
@@ -50,6 +75,8 @@ The exact value of `χ(ℝ²)` is not known. This project proves only the bounds
 - `HadwigerNelsonBounds/PartsGadgetForcedPair.lean` — finite combinatorial distance-four forcing theorem.
 - `HadwigerNelsonBounds/PartsGadgetEmbedding.lean` — Euclidean realization of every finite constraint.
 - `HadwigerNelsonBounds/PartsSpindle.lean` — four-color contradiction and headline known-bounds theorem.
+- `HadwigerNelsonBounds/FiniteWitness.lean` — conditional bridge from a finite non-5-colorable realization to the lower bound 6.
+- `HadwigerNelsonBounds/DeBruijnErdos.lean` — graph-coloring compactness, finite attainment, and the exact finite-obstruction criterion.
 - `HadwigerNelsonBounds.lean` — public entry module.
 
 Generated files remain kernel-checked Lean source. `scripts/generate_parts_gadget.py` deterministically regenerates the finite second-stage data and certificates from integer axial-lattice arithmetic.
@@ -77,7 +104,7 @@ Author and maintainer: Egor Lyfar <egor.lyfar@gmail.com>.
 
 ## Lean Pool status
 
-The complete known-bounds theorem is a future Lean Pool candidate. No upstream PR has been opened from this snapshot.
+The known-bounds formalization is under review in [Lean Pool PR #274](https://github.com/Vilin97/lean-pool/pull/274). The compactness and finite-obstruction theory on this research branch has not been submitted upstream.
 
 ## License
 
