@@ -32,7 +32,8 @@ while IFS= read -r source_file; do
     echo "$source_file has $line_count lines; limit is 700." >&2
     exit 1
   fi
-done < <(find HadwigerNelsonBounds -name '*.lean' -type f -print)
+done < <(find HadwigerNelsonBounds scripts -type f \
+  \( -name '*.lean' -o -name '*.py' -o -name '*.sh' \) -print)
 
 run_without_warnings declarations lake exe runLinter HadwigerNelsonBounds
 run_without_warnings style lake exe lint-style HadwigerNelsonBounds
@@ -44,6 +45,12 @@ import HadwigerNelsonBounds
 #print axioms HadwigerNelsonBounds.dist_between_same_color_lattice_points
 #print axioms HadwigerNelsonBounds.isbell_isProperColoring
 #print axioms HadwigerNelsonBounds.chromaticNumber_le_seven
+#print axioms HadwigerNelsonBounds.parts_canonical_triangle_not_monochromatic
+#print axioms HadwigerNelsonBounds.parts_gadget_forces_monochromatic_pair
+#print axioms HadwigerNelsonBounds.partsGadgetColoring_valid
+#print axioms HadwigerNelsonBounds.unitDistanceGraph_not_colorable_four
+#print axioms HadwigerNelsonBounds.five_le_chromaticNumber
+#print axioms HadwigerNelsonBounds.hadwiger_nelson_known_bounds
 LEAN
 
 axiom_log="$audit_dir/axioms.log"
@@ -55,8 +62,8 @@ import sys
 text = open(sys.argv[1], encoding="utf-8").read()
 allowed = {"Classical.choice", "propext", "Quot.sound"}
 payloads = re.findall(r"depends on axioms:\s*\[(.*?)\]", text, flags=re.DOTALL)
-if len(payloads) != 4:
-    raise SystemExit(f"expected four axiom reports, found {len(payloads)}")
+if len(payloads) != 10:
+    raise SystemExit(f"expected ten axiom reports, found {len(payloads)}")
 for payload in payloads:
     found = {name.strip() for name in payload.split(",") if name.strip()}
     unexpected = found - allowed

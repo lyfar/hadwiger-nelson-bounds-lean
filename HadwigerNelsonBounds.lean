@@ -4,15 +4,17 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Egor Lyfar
 -/
 
-import HadwigerNelsonBounds.IsbellColoring
+import HadwigerNelsonBounds.PartsSpindle
 
 /-!
-# Isbell's seven-coloring of the Euclidean plane
+# Kernel-checked Hadwiger--Nelson bounds
 
-This library constructs a proper seven-coloring of the unit-distance graph on
-the Euclidean plane. It formalizes the classical upper bound
-`χ(ℝ²) ≤ 7` associated with the Hadwiger--Nelson problem and Erdős Problem 508.
+This library proves the currently known bounds `5 ≤ χ(ℝ²) ≤ 7` for the
+unit-distance graph of the Euclidean plane.  The upper bound is an explicit
+Isbell-style coloring.  The lower bound checks Parts' 481-vertex certificate,
+embeds a finite doubled triangular-lattice gadget, and closes the final
+spindle.
 
-The exact chromatic number of the plane and the known lower bound `5 ≤ χ(ℝ²)`
-are not formalized here.
+The exact chromatic number remains open: this does not decide whether it is
+five, six, or seven, and therefore does not solve Erdős Problem 508.
 -/
