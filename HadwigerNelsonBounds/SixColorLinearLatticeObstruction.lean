@@ -80,6 +80,39 @@ theorem linearResidueSix_has_short_kernel (a b : ZMod 6) :
   · refine ⟨2, -2, by norm_num, by norm_num [triangularLatticeNorm], ?_⟩
     simpa [linearResidueSix, sub_eq_add_neg, mul_comm] using hab
 
+/-- Coordinate-free form of the short-kernel theorem: every additive map from
+the triangular lattice to six residues has a nonzero kernel vector of norm at
+most four. -/
+theorem addMonoidHom_zmodSix_has_short_kernel
+    (φ : (ℤ × ℤ) →+ ZMod 6) :
+    ∃ di dj : ℤ,
+      (di, dj) ≠ (0, 0) ∧
+      triangularLatticeNorm di dj ≤ 4 ∧
+      φ (di, dj) = 0 := by
+  let a : ZMod 6 := φ (1, 0)
+  let b : ZMod 6 := φ (0, 1)
+  obtain ⟨di, dj, hnonzero, hshort, hkernel⟩ :=
+    linearResidueSix_has_short_kernel a b
+  refine ⟨di, dj, hnonzero, hshort, ?_⟩
+  have hdecomp : (di, dj) = di • (1, 0) + dj • (0, 1) := by
+    ext <;> simp
+  rw [hdecomp, map_add, map_zsmul, map_zsmul]
+  simpa [a, b, linearResidueSix, zsmul_eq_mul, mul_comm] using hkernel
+
+/-- No additive map from the triangular lattice to six residues separates all
+nonzero kernel vectors above norm four. -/
+theorem no_addMonoidHom_zmodSix_normFive_separation
+    (φ : (ℤ × ℤ) →+ ZMod 6) :
+    ¬ ∀ di dj : ℤ,
+      (di, dj) ≠ (0, 0) →
+      φ (di, dj) = 0 →
+      5 ≤ triangularLatticeNorm di dj := by
+  intro hseparated
+  obtain ⟨di, dj, hnonzero, hshort, hkernel⟩ :=
+    addMonoidHom_zmodSix_has_short_kernel φ
+  have hlong := hseparated di dj hnonzero hkernel
+  omega
+
 /-- The bound four is attained by the coefficient pair `(1, 3)`: every
 nonzero vector in its kernel has triangular-lattice norm at least four. -/
 theorem linearResidueSix_one_three_kernel_norm_ge_four
