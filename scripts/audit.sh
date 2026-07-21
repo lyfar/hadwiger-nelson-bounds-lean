@@ -51,6 +51,13 @@ import HadwigerNelsonBounds
 #print axioms HadwigerNelsonBounds.unitDistanceGraph_not_colorable_four
 #print axioms HadwigerNelsonBounds.five_le_chromaticNumber
 #print axioms HadwigerNelsonBounds.hadwiger_nelson_known_bounds
+#print axioms HadwigerNelsonBounds.triangularLatticeNorm_nonneg
+#print axioms HadwigerNelsonBounds.linearResidueSix_has_short_kernel
+#print axioms HadwigerNelsonBounds.addMonoidHom_zmodSix_has_short_kernel
+#print axioms HadwigerNelsonBounds.no_addMonoidHom_zmodSix_normFive_separation
+#print axioms HadwigerNelsonBounds.linearResidueSix_one_three_kernel_norm_ge_four
+#print axioms HadwigerNelsonBounds.linearResidueSix_one_three_has_norm_four_kernel
+#print axioms HadwigerNelsonBounds.no_linearResidueSix_normSeven_separation
 LEAN
 
 axiom_log="$audit_dir/axioms.log"
@@ -62,8 +69,8 @@ import sys
 text = open(sys.argv[1], encoding="utf-8").read()
 allowed = {"Classical.choice", "propext", "Quot.sound"}
 payloads = re.findall(r"depends on axioms:\s*\[(.*?)\]", text, flags=re.DOTALL)
-if len(payloads) != 10:
-    raise SystemExit(f"expected ten axiom reports, found {len(payloads)}")
+if len(payloads) != 17:
+    raise SystemExit(f"expected seventeen axiom reports, found {len(payloads)}")
 for payload in payloads:
     found = {name.strip() for name in payload.split(",") if name.strip()}
     unexpected = found - allowed
