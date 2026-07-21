@@ -5,6 +5,7 @@ Authors: Egor Lyfar
 -/
 
 import HadwigerNelsonBounds.PartsSpindle
+import HadwigerNelsonBounds.FiniteWitness
 
 /-!
 # Kernel-checked Hadwiger--Nelson bounds
