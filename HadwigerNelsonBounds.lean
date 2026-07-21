@@ -5,6 +5,7 @@ Authors: Egor Lyfar
 -/
 
 import HadwigerNelsonBounds.PartsSpindle
+import HadwigerNelsonBounds.SixColorLinearLatticeObstruction
 
 /-!
 # Kernel-checked Hadwiger--Nelson bounds
