@@ -1,4 +1,4 @@
-Egor is building an independent AI research lab because his son Misha has rare genetic hearing loss. Every checked result tests and advances the research workflow. One rare disease is rare. Rare diseases together are not.
+This project is part of an ongoing AI-assisted research workflow for formal mathematics: Lean checks each proof term against its stated assumptions, so a result either holds or it does not.
 
 # Hadwiger–Nelson bounds in Lean
 
